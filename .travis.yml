@@ -24,4 +24,4 @@ before_script:
 
 script: |
   rsync -a "$PWD/" ec2-user@ec2-52-57-178-93.eu-central-1.compute.amazonaws.com:/app/
-  echo 'cd /app && (kill `cat node.pid` || true) && yarn start & echo $! > node.pid' | ssh ec2-user@ec2-52-57-178-93.eu-central-1.compute.amazonaws.com
+  echo 'cd /app && (kill `cat node.pid` || true) && nohup yarn start & echo $! > node.pid' | ssh ec2-user@ec2-52-57-178-93.eu-central-1.compute.amazonaws.com
