@@ -13,6 +13,9 @@ cache:
 install:
 - yarn
 
+before_script:
+- echo "StrictHostKeyChecking no" >> ~/.ssh/config
+
 script: |
   echo $DEPLOY_KEY > ~/.ssh/id_rsa
   rsync . $AWS_SERVER:/app
