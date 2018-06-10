@@ -1,0 +1,19 @@
+language: node_js
+dist: trusty
+sudo: false
+
+node_js:
+- node
+
+cache:
+  yarn: true
+  directories:
+  - node_modules
+
+install:
+- yarn
+
+script: |
+  echo $DEPLOY_KEY > ~/.ssh/id_rsa
+  rsync . $AWS_SERVER:/app
+  echo "cd /app && yarn start &" | ssh $AWS_SERVER
