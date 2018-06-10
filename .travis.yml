@@ -10,6 +10,10 @@ cache:
   directories:
   - node_modules
 
+addons:
+  ssh_known_hosts:
+  - ec2-52-57-178-93.eu-central-1.compute.amazonaws.com
+
 install:
 - yarn
 
@@ -19,5 +23,5 @@ before_script:
 - chmod 400 ~/.ssh/id_rsa
 
 script: |
-  rsync . $AWS_SERVER:/app
-  echo "cd /app && yarn start &" | ssh $AWS_SERVER
+  rsync -a "$PWD/" ec2-user@ec2-52-57-178-93.eu-central-1.compute.amazonaws.com:/app/
+  echo 'cd /app && (kill `cat node.pid` || true) && yarn start & echo $! > node.pid' | ssh ec2-user@ec2-52-57-178-93.eu-central-1.compute.amazonaws.com
