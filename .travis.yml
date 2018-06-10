@@ -15,8 +15,9 @@ install:
 
 before_script:
 - echo "StrictHostKeyChecking no" >> ~/.ssh/config
+- openssl aes-256-cbc -K $encrypted_463215d91ccd_key -iv $encrypted_463215d91ccd_iv -in bosstimerbot.enc -out ~/.ssh/id_rsa -d
+- chmod 400 ~/.ssh/id_rsa
 
 script: |
-  echo $DEPLOY_KEY > ~/.ssh/id_rsa
   rsync . $AWS_SERVER:/app
   echo "cd /app && yarn start &" | ssh $AWS_SERVER
